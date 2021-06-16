@@ -1,9 +1,5 @@
 <template>
-    <div
-        class="hu-color-picker"
-        :class="{ light: isLightTheme }"
-        :style="{ width: totalWidth + 'px' }"
-    >
+    <div class="hu-color-picker" :class="{ light: isLightTheme }" :style="{ width: totalWidth + 'px' }">
         <div class="color-set">
             <Saturation
                 ref="saturation"
@@ -28,39 +24,24 @@
                 @selectAlpha="selectAlpha"
             />
         </div>
-        <div
-            :style="{ height: previewHeight + 'px' }"
-            class="color-show"
-        >
+        <div :style="{ height: previewHeight + 'px' }" class="color-show">
             <Preview
                 :color="rgbaString"
                 :width="previewWidth"
-                :height="previewHeight"
-            />
+                :height="previewHeight" />
             <Sucker
                 v-if="!suckerHide"
                 :sucker-canvas="suckerCanvas"
                 :sucker-area="suckerArea"
                 @openSucker="openSucker"
-                @selectSucker="selectSucker"
-            />
+                @selectSucker="selectSucker" />
         </div>
-        <Box
-            name="HEX"
-            :color="modelHex"
-            @inputColor="inputHex"
-        />
-        <Box
-            name="RGBA"
-            :color="modelRgba"
-            @inputColor="inputRgba"
-        />
-        <Colors
-            :color="rgbaString"
+        <Box v-if="!hideHex" name="HEX" :color="modelHex" @inputColor="inputHex"/>
+        <Box v-if="!hideRGBA" name="RGBA" :color="modelRgba" @inputColor="inputRgba"/>
+        <Colors :color="rgbaString"
             :colors-default="colorsDefault"
             :colors-history-key="colorsHistoryKey"
-            @selectColor="selectColor"
-        />
+            @selectColor="selectColor" />
     </div>
 </template>
 
@@ -115,7 +96,15 @@ export default {
         colorsHistoryKey: {
             type: String,
             default: 'vue-colorpicker-history'
-        }
+        },
+        hideHex: {
+            type: Boolean,
+            default: false,
+        },
+        hideRGBA: {
+            type: Boolean,
+            default: false,
+        },
     },
     data() {
         return {
@@ -258,18 +247,22 @@ export default {
 
 <style lang="scss">
 .hu-color-picker {
+    position:absolute;
     padding: 10px;
     background: #1d2024;
     border-radius: 4px;
     box-shadow: 0 0 16px 0 rgba(0, 0, 0, 0.16);
     z-index: 1;
+
     &.light {
         background: #f7f8f9;
+
         .color-show {
             .sucker {
                 background: #eceef0;
             }
         }
+
         .color-type {
             .name {
                 background: #e7e8e9;
@@ -279,16 +272,20 @@ export default {
                 background: #eceef0;
             }
         }
+
         .colors.history {
             border-top: 1px solid #eee;
         }
     }
+
     canvas {
         vertical-align: top;
     }
+
     .color-set {
         display: flex;
     }
+
     .color-show {
         margin-top: 8px;
         display: flex;

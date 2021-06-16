@@ -7,7 +7,7 @@
             </li>
         </ul>
 
-        <ul v-if="colorsHistory.length" class="colors history">
+        <ul v-if="colorsHistory.length" class="colors">
             <li v-for="item in colorsHistory" :key="item" class="item" @click="selectColor(item)">
                 <div :style="{ background: `url(${imgAlphaBase64})` }" class="alpha"/>
                 <div :style="{ background: item }" class="color"/>
@@ -77,43 +77,16 @@ export default {
 }
 </script>
 
-<style lang="scss">
-.colors {
-    padding: 0;
-    margin: 0;
-    &.history {
-        margin-top: 10px;
-        border-top: 1px solid #2e333a;
-    }
-    .item {
-        position: relative;
-        width: 16px;
-        height: 16px;
-        margin: 10px 0 0 10px;
-        border-radius: 3px;
-        box-sizing: border-box;
-        vertical-align: top;
-        display: inline-block;
-        transition: all 0.1s;
-        cursor: pointer;
-        &:nth-child(8n + 1) {
-            margin-left: 0;
-        }
-        &:hover {
-            transform: scale(1.4);
-        }
-        .alpha {
-            height: 100%;
-            border-radius: 4px; // 大一像素，否则四个角会看到白点
-        }
-        .color {
-            position: absolute;
-            left: 0;
-            top: 0;
-            width: 100%;
-            height: 100%;
-            border-radius: 3px;
-        }
-    }
+<style scoped>
+ul.colors, ul.colors li {
+  margin: 0 !important;
+  padding: 0 !important;
+}
+
+ul.colors {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  margin-top: 1rem !important;
 }
 </style>
