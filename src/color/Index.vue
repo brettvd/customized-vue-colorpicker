@@ -37,7 +37,7 @@
                 @selectSucker="selectSucker" />
         </div>
         <Box v-if="!hideHex" name="HEX" :color="modelHex" @inputColor="inputHex"/>
-        <Box v-if="!hideRGBA" name="RGBA" :color="modelRgba" @inputColor="inputRgba"/>
+        <Box v-if="!hideRgba" name="RGBA" :color="modelRgba" @inputColor="inputRgba"/>
         <Colors :color="rgbaString"
             :colors-default="colorsDefault"
             :colors-history-key="colorsHistoryKey"
@@ -101,7 +101,7 @@ export default {
             type: Boolean,
             default: false,
         },
-        hideRGBA: {
+        hideRgba: {
             type: Boolean,
             default: false,
         },
