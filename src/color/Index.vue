@@ -16,6 +16,7 @@
                 @selectHue="selectHue"
             />
             <Alpha
+                v-if="!hideAlpha"
                 ref="alpha"
                 :color="rgbString"
                 :rgba="rgba"
@@ -25,10 +26,7 @@
             />
         </div>
         <div :style="{ height: previewHeight + 'px' }" class="color-show">
-            <Preview
-                :color="rgbaString"
-                :width="previewWidth"
-                :height="previewHeight" />
+            <Preview style="width: 100%;" :color="rgbaString" :height="previewHeight" />
             <Sucker
                 v-if="!suckerHide"
                 :sucker-canvas="suckerCanvas"
@@ -38,10 +36,7 @@
         </div>
         <Box v-if="!hideHex" name="HEX" :color="modelHex" @inputColor="inputHex"/>
         <Box v-if="!hideRgba" name="RGBA" :color="modelRgba" @inputColor="inputRgba"/>
-        <Colors :color="rgbaString"
-            :colors-default="colorsDefault"
-            :colors-history-key="colorsHistoryKey"
-            @selectColor="selectColor" />
+        <Colors :color="rgbaString" :colors-default="colorsDefault" @selectColor="selectColor" />
     </div>
 </template>
 
@@ -93,15 +88,15 @@ export default {
                 '#00BEFF', '#2E81FF', '#5D61FF', '#FF89CF', '#FC3CAD', '#BF3DCE', '#8E00A7', 'rgba(0,0,0,0)'
             ]
         },
-        colorsHistoryKey: {
-            type: String,
-            default: 'vue-colorpicker-history'
-        },
         hideHex: {
             type: Boolean,
             default: false,
         },
         hideRgba: {
+            type: Boolean,
+            default: false,
+        },
+        hideAlpha: {
             type: Boolean,
             default: false,
         },
