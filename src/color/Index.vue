@@ -101,6 +101,7 @@ export default {
       type: Boolean,
       default: false,
     },
+    enableAlpha: Boolean,
   },
   data() {
     return {
@@ -153,6 +154,10 @@ export default {
       return `rgba(${this.rgbaStringShort})`
     },
     hexString() {
+      if ( this.enableAlpha && this.rgba.a === 0 ) {
+        return 'transparent';
+      }
+
       return this.rgb2hex(this.rgba, true)
     }
   },
@@ -180,6 +185,11 @@ export default {
       } else if (typeof value === 'string') {
         hexColor = value;
       }
+
+      if ( hexColor === this.hexString) {
+        return;
+      }
+
       Object.assign(this, this.setColorValue(hexColor));
     },
     selectSaturation(color) {
