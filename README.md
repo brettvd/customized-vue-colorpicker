@@ -1,5 +1,7 @@
 # vue-colorpicker
 
+This is a fork of the project created by @caohenghu with some enhancements for hiding certain features.
+
 ## [LiveDemo](https://caohenghu.github.io/vue-colorpicker/)
 
 ![preview-dark](https://raw.githubusercontent.com/caohenghu/vue-colorpicker/master/src/img/preview-dark.jpg)
