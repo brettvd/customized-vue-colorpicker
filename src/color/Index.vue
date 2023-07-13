@@ -1,43 +1,46 @@
 <template>
-  <div class="hu-color-picker" :class="{ light: isLightTheme }" :style="{ width: totalWidth + 'px' }">
-    <div class="color-set">
-      <Saturation
-          ref="saturation"
-          :color="rgbString"
-          :hsv="hsv"
-          :size="hueHeight"
-          @selectSaturation="selectSaturation"
-      />
-      <Hue
-          ref="hue"
-          :hsv="hsv"
-          :width="hueWidth"
-          :height="hueHeight"
-          @selectHue="selectHue"
-      />
-      <Alpha
-          v-if="!hideAlpha"
-          ref="alpha"
-          :color="rgbString"
-          :rgba="rgba"
-          :width="hueWidth"
-          :height="hueHeight"
-          @selectAlpha="selectAlpha"
-      />
+  <popper trigger="clickToToggle">
+    <Preview slot="reference" :color="rgbaString" :width="16" :height="16" style="border-radius: 3px"></Preview>
+    <div class="hu-color-picker" :class="{ light: isLightTheme }" :style="{ width: totalWidth + 'px' }">
+      <div class="color-set">
+        <Saturation
+            ref="saturation"
+            :color="rgbString"
+            :hsv="hsv"
+            :size="hueHeight"
+            @selectSaturation="selectSaturation"
+        />
+        <Hue
+            ref="hue"
+            :hsv="hsv"
+            :width="hueWidth"
+            :height="hueHeight"
+            @selectHue="selectHue"
+        />
+        <Alpha
+            v-if="!hideAlpha"
+            ref="alpha"
+            :color="rgbString"
+            :rgba="rgba"
+            :width="hueWidth"
+            :height="hueHeight"
+            @selectAlpha="selectAlpha"
+        />
+      </div>
+      <div :style="{ height: previewHeight + 'px' }" class="color-show">
+        <Preview style="width: 100%;" :color="rgbaString" :height="previewHeight"/>
+        <Sucker
+            v-if="!suckerHide"
+            :sucker-canvas="suckerCanvas"
+            :sucker-area="suckerArea"
+            @openSucker="openSucker"
+            @selectSucker="selectSucker"/>
+      </div>
+      <Box v-if="!hideHex" name="HEX" :color="modelHex" @inputColor="inputHex"/>
+      <Box v-if="!hideRgba" name="RGBA" :color="modelRgba" @inputColor="inputRgba"/>
+      <Colors :color="rgbaString" :colors-default="colorsDefault" @selectColor="selectColor"/>
     </div>
-    <div :style="{ height: previewHeight + 'px' }" class="color-show">
-      <Preview style="width: 100%;" :color="rgbaString" :height="previewHeight"/>
-      <Sucker
-          v-if="!suckerHide"
-          :sucker-canvas="suckerCanvas"
-          :sucker-area="suckerArea"
-          @openSucker="openSucker"
-          @selectSucker="selectSucker"/>
-    </div>
-    <Box v-if="!hideHex" name="HEX" :color="modelHex" @inputColor="inputHex"/>
-    <Box v-if="!hideRgba" name="RGBA" :color="modelRgba" @inputColor="inputRgba"/>
-    <Colors :color="rgbaString" :colors-default="colorsDefault" @selectColor="selectColor"/>
-  </div>
+  </popper>
 </template>
 
 <script>
@@ -49,6 +52,8 @@ import Preview from './Preview.vue'
 import Sucker from './Sucker.vue'
 import Box from './Box.vue'
 import Colors from './Colors.vue'
+import Popper from 'vue-popperjs';
+import 'vue-popperjs/dist/vue-popper.css';
 
 export default {
   components: {
@@ -58,7 +63,8 @@ export default {
     Preview,
     Sucker,
     Box,
-    Colors
+    Colors,
+    Popper
   },
   mixins: [mixin],
   props: {
@@ -265,7 +271,6 @@ export default {
 
 <style lang="scss">
 .hu-color-picker {
-  position: absolute;
   padding: 10px;
   background: #1d2024;
   border-radius: 4px;

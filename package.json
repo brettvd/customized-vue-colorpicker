@@ -1,6 +1,6 @@
 {
     "name": "@brettvd/customized-vue-colorpicker",
-    "version": "1.0.0",
+    "version": "1.0.1",
     "description": "Colorpicker of Vue Components",
     "main": "src/index.js",
     "scripts": {
@@ -37,6 +37,7 @@
         "sass-loader": "^7.1.0",
         "url-loader": "^2.1.0",
         "vue-loader": "^15.5.1",
+        "vue-popperjs": "^2.3.0",
         "vue-template-compiler": "^2.5.22",
         "webpack": "^4.41.6",
         "webpack-cli": "^3.2.1",
