@@ -1,7 +1,10 @@
 <template>
-  <popper trigger="clickToToggle">
-    <Preview slot="reference" :color="rgbaString" :width="16" :height="16" style="border-radius: 3px"></Preview>
-    <div class="hu-color-picker" :class="{ light: isLightTheme }" :style="{ width: totalWidth + 'px' }">
+  <popper trigger="clickToToggle" :options="{placement: placement}">
+    <div id="previewReference" slot="reference" :style="{height: previewHeight + 'px', width: previewWidth + 'px', position: 'relative'}">
+      <Preview :color="rgbaString" :width="previewWidth" :height="previewHeight" style="border-radius: 3px"></Preview>
+      <slot name="previewIcon"></slot>
+    </div>
+    <div class="hu-color-picker popper" :class="{ light: isLightTheme }" :style="{ width: totalWidth + 'px' }">
       <div class="color-set">
         <Saturation
             ref="saturation"
@@ -27,8 +30,8 @@
             @selectAlpha="selectAlpha"
         />
       </div>
-      <div :style="{ height: previewHeight + 'px' }" class="color-show">
-        <Preview style="width: 100%;" :color="rgbaString" :height="previewHeight"/>
+      <div :style="{ height: previewBtnHeight + 'px' }" class="color-show">
+        <Preview style="width: 100%;" :color="rgbaString" :height="previewBtnHeight"/>
         <Sucker
             v-if="!suckerHide"
             :sucker-canvas="suckerCanvas"
@@ -91,8 +94,8 @@ export default {
     colorsDefault: {
       type: Array,
       default: () => [
-        '#000000', '#FFFFFF', '#FF1900', '#F47365', '#FFB243', '#FFE623', '#6EFF2A', '#1BC7B1',
-        '#00BEFF', '#2E81FF', '#5D61FF', '#FF89CF', '#FC3CAD', '#BF3DCE', '#8E00A7', 'rgba(0,0,0,0)'
+        '#000000', '#777777', '#FFFFFF', '#FF1900', '#F47365', '#FFB243', '#FFE623', '#6EFF2A',
+        '#1BC7B1', '#00BEFF', '#2E81FF', '#5D61FF', '#FF89CF', '#FC3CAD', '#BF3DCE', '#8E00A7'
       ]
     },
     hideHex: {
@@ -108,12 +111,24 @@ export default {
       default: false,
     },
     enableAlpha: Boolean,
+    placement: {
+      type: String,
+      default: 'bottom'
+    },
+    previewHeight: {
+      type: Number,
+      default: 16
+    },
+    previewWidth: {
+      type: Number,
+      default: 16
+    }
   },
   data() {
     return {
       hueWidth: 15,
       hueHeight: 152,
-      previewHeight: 30,
+      previewBtnHeight: 30,
       modelRgba: '',
       modelHex: '',
       r: 0,
@@ -126,14 +141,17 @@ export default {
     }
   },
   computed: {
+    colorsDefaultList() {
+
+    },
     isLightTheme() {
       return this.theme === 'light'
     },
     totalWidth() {
       return this.hueHeight + (this.hueWidth + 8) * 2
     },
-    previewWidth() {
-      return this.totalWidth - (this.suckerHide ? 0 : this.previewHeight)
+    previewBtnWidth() {
+      return this.totalWidth - (this.suckerHide ? 0 : this.previewBtnHeight)
     },
     rgba() {
       return {
@@ -277,6 +295,15 @@ export default {
   box-shadow: 0 0 16px 0 rgba(0, 0, 0, 0.16);
   z-index: 1;
 
+  &:not(.light) {
+    &.popper {
+      border-color: #1d2024;
+    }
+    .popper__arrow {
+      border-bottom-color: #1d2024;
+    }
+  }
+
   &.light {
     background: #f7f8f9;
 
@@ -314,5 +341,12 @@ export default {
     margin-top: 8px;
     display: flex;
   }
+}
+
+#previewReference > * {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
 }
 </style>
