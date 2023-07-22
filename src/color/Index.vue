@@ -1,5 +1,5 @@
 <template>
-  <popper trigger="clickToToggle" :options="{placement: placement}">
+  <popper trigger="clickToToggle" :options="{placement: placement}" v-bind="$attrs">
     <div id="previewReference" slot="reference" :style="{height: previewHeight + 'px', width: previewWidth + 'px', position: 'relative'}">
       <Preview :color="rgbaString" :width="previewWidth" :height="previewHeight" style="border-radius: 3px"></Preview>
       <slot name="previewIcon"></slot>
