@@ -293,7 +293,7 @@ export default {
   background: #1d2024;
   border-radius: 4px;
   box-shadow: 0 0 16px 0 rgba(0, 0, 0, 0.16);
-  z-index: 1;
+  z-index: 1050;
 
   &:not(.light) {
     &.popper {
