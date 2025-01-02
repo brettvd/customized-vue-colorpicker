@@ -55,7 +55,7 @@ import Preview from './Preview.vue'
 import Sucker from './Sucker.vue'
 import Box from './Box.vue'
 import Colors from './Colors.vue'
-import Popper from 'vue-popperjs';
+import Popper from 'vue-popperjs/src/index.js';
 import 'vue-popperjs/dist/vue-popper.css';
 
 export default {
